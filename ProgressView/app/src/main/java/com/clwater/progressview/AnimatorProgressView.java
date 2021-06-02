@@ -243,7 +243,7 @@ public class AnimatorProgressView  extends View {
             indexOffset += offsetLine;
             //偏移位置
             canvas.translate(offsetLine, 0);
-        }while (indexOffset < width + offsetLine * 2);
+        }while (indexOffset < width + offsetLine * 4);
 
         canvas.restore();
     }
