@@ -47,22 +47,57 @@ public class AnimatorProgressView  extends View {
     //当前view 宽度和高度
     private int width = 0;
     private int height = 0;
+    //动画偏移量
+    private float offsetAnimator = 0;
 
+
+    //下面为可自定义编辑的参数
     //背景颜色
     private String viewBackGroundColor = "#CECECE";
     //线条颜色
     private String viewLineColor = "#FFFFFF";
     //进度条颜色
-    private String viewProgressColor = "#00879E";
+    private String viewProgressColor = "#000000";
     //线条见间隔
     private int offsetLine = 20;
+
+
+
+    //画笔/线条的宽度
+    private int paintWidth = 10;
+
+
     //当前进度
     private float progress = 0;
 
-    //动画偏移量
-    private float offsetAnimator = 0;
 
-    private final int paintWidth = 10;
+
+    public void setViewBackGroundColor(String viewBackGroundColor) {
+        this.viewBackGroundColor = viewBackGroundColor;
+        invalidate();
+    }
+
+    public void setViewLineColor(String viewLineColor) {
+        this.viewLineColor = viewLineColor;
+        invalidate();
+    }
+
+    public void setViewProgressColor(String viewProgressColor) {
+        this.viewProgressColor = viewProgressColor;
+        invalidate();
+    }
+
+    public void setOffsetLine(int offsetLine) {
+        this.offsetLine = offsetLine;
+        invalidate();
+        startAnimator();
+    }
+
+    public void setPaintWidth(int paintWidth) {
+        this.paintWidth = paintWidth;
+        invalidate();
+    }
+
 
     /**
      * @description 设置进度
@@ -92,6 +127,8 @@ public class AnimatorProgressView  extends View {
      * @description 绘制相关动画
      */
     protected void onDraw(Canvas canvas) {
+
+
         //绘制背景
         drawViewBackground(canvas);
         //绘制进度
@@ -128,10 +165,10 @@ public class AnimatorProgressView  extends View {
      */
     public void startAnimator(){
         //动画差值范围
-        ValueAnimator va  = ValueAnimator.ofFloat(0f, paintWidth * 2);
+        ValueAnimator va  = ValueAnimator.ofFloat(0f, offsetLine);
         //循环播放
         va.setRepeatCount(ValueAnimator.INFINITE);
-        va.setDuration(1000);
+//        va.setDuration(1000);
         //线性取值
         va.setInterpolator(new LinearInterpolator());
         va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -193,7 +230,6 @@ public class AnimatorProgressView  extends View {
         //设置画笔圆形边界
         paint.setStrokeCap(Paint.Cap.ROUND);
         //todo 动画效果展示优化
-//        canvas.translate(-paintWidth / 2, 0);
         canvas.translate(-offsetLine * 2, 0);
         canvas.translate(offsetAnimator, 0);
         canvas.save();
@@ -203,11 +239,11 @@ public class AnimatorProgressView  extends View {
         //依次绘制线条
         do {
             //绘制右上到左下的线条
-            canvas.drawLine(0, 0, -offsetLine, height, paint);
+            canvas.drawLine(20, -20, -offsetLine - 20, height + 20, paint);
             indexOffset += offsetLine;
             //偏移位置
             canvas.translate(offsetLine, 0);
-        }while (indexOffset < width + height + 5);
+        }while (indexOffset < width + offsetLine * 2);
 
         canvas.restore();
     }
