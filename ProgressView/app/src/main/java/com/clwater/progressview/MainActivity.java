@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private int backgroundColor = 0xFFCECECE;
     private int viewLineColor = 0xFFFFFFFF;
     private int viewProgressColor = 0xFF000000;
-    private int LineColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -236,7 +235,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.bt_color_random).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backgroundColor = randomColor();
+                viewProgressColor = randomColor();
+                viewLineColor = randomColor();
+                animatorProgressView.setViewBackGroundColor(backgroundColor);
+                animatorProgressView.setViewProgressColor(viewProgressColor);
+                animatorProgressView.setViewLineColor(viewLineColor);
+
+                tv_color_base_background.setText(String.format("#%06X", backgroundColor));
+                vw_color_base_background.setBackgroundColor(backgroundColor);
+
+                tv_color_progress_background.setText(String.format("#%06X", viewProgressColor));
+                vw_color_progress_background.setBackgroundColor(viewProgressColor);
+
+                tv_color_base_line.setText(String.format("#%06X", viewLineColor));
+                vw_color_line.setBackgroundColor(viewLineColor);
+
+            }
+        });
+
     }
 
+    /**
+     * @description 生成随机颜色
+     */
+    private int randomColor() {
+        Random random = new Random();
+        int r = random.nextInt(256);
+        int g = random.nextInt(256);
+        int b = random.nextInt(256);
+        return Color.rgb(r, g, b);
+    }
 
 }
