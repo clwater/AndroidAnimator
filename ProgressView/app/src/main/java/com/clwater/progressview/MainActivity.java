@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText etProgress;
     private MaterialTextView tvLineWidth;
     private MaterialTextView tvLineInterval;
+    private MaterialTextView tv_line_animator;
+    private MaterialTextView tv_line_animator_progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         etProgress = findViewById(R.id.et_progress);
         tvLineWidth = findViewById(R.id.tv_line_width);
         tvLineInterval = findViewById(R.id.tv_line_interval);
+        tv_line_animator = findViewById(R.id.tv_line_animator);
+        tv_line_animator_progress = findViewById(R.id.tv_line_animator_progress);
 
         findViewById(R.id.bt_progress_set).setOnClickListener(v -> {
             int progress = Integer.parseInt(etProgress.getText().toString());
@@ -88,6 +92,43 @@ public class MainActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 animatorProgressView.setOffsetLine(progress);
                 tvLineInterval.setText("" + progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
+        ((AppCompatSeekBar)findViewById(R.id.sb_line_animator)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                animatorProgressView.setAnimatorTime(progress);
+                tv_line_animator.setText("" + progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        ((AppCompatSeekBar)findViewById(R.id.sb_line_animator_progress)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                animatorProgressView.setAnimatorProgressTime(progress);
+                tv_line_animator_progress.setText("" + progress);
             }
 
             @Override

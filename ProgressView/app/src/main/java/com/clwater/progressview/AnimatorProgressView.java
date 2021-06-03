@@ -60,6 +60,10 @@ public class AnimatorProgressView  extends View {
     private String viewProgressColor = "#000000";
     //线条见间隔
     private int offsetLine = 20;
+    //执行动画需要的时间
+    private int animatorTime = 1000;
+    //进度变化动画需要的时间
+    private int animatorProgressTime = 1000;
 
 
 
@@ -98,6 +102,17 @@ public class AnimatorProgressView  extends View {
         invalidate();
     }
 
+    public void setAnimatorTime(int animatorTime) {
+        this.animatorTime = animatorTime;
+        invalidate();
+        startAnimator();
+    }
+
+    public void setAnimatorProgressTime(int animatorProgressTime) {
+        this.animatorProgressTime = animatorProgressTime;
+        invalidate();
+        startAnimator();
+    }
 
     /**
      * @description 设置进度
@@ -143,7 +158,7 @@ public class AnimatorProgressView  extends View {
     public void startProgressAnimator(int startProgress, int endProgress){
         //动画差值范围
         ValueAnimator va  = ValueAnimator.ofFloat(startProgress, endProgress);
-        va.setDuration(1000);
+        va.setDuration(animatorProgressTime);
         //线性取值
         va.setInterpolator(new LinearInterpolator());
         va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -168,7 +183,7 @@ public class AnimatorProgressView  extends View {
         ValueAnimator va  = ValueAnimator.ofFloat(0f, offsetLine);
         //循环播放
         va.setRepeatCount(ValueAnimator.INFINITE);
-//        va.setDuration(1000);
+        va.setDuration(animatorTime);
         //线性取值
         va.setInterpolator(new LinearInterpolator());
         va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
