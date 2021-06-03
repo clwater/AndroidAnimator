@@ -55,9 +55,9 @@ public class AnimatorProgressView  extends View {
     //背景颜色
     private int viewBackGroundColor = 0xFFCECECE;
     //线条颜色
-    private String viewLineColor = "#FFFFFF";
+    private int viewLineColor = 0xFFFFFFFF;
     //进度条颜色
-    private String viewProgressColor = "#000000";
+    private int viewProgressColor = 0xFF000000;
     //线条见间隔
     private int offsetLine = 20;
     //执行动画需要的时间
@@ -81,12 +81,12 @@ public class AnimatorProgressView  extends View {
         invalidate();
     }
 
-    public void setViewLineColor(String viewLineColor) {
+    public void setViewLineColor(int viewLineColor) {
         this.viewLineColor = viewLineColor;
         invalidate();
     }
 
-    public void setViewProgressColor(String viewProgressColor) {
+    public void setViewProgressColor(int viewProgressColor) {
         this.viewProgressColor = viewProgressColor;
         invalidate();
     }
@@ -237,7 +237,7 @@ public class AnimatorProgressView  extends View {
      */
     private void getProgressLines(Canvas canvas){
         Paint paint = new Paint();
-        paint.setColor(Color.parseColor(viewLineColor));
+        paint.setColor(viewLineColor);
 
         //设置画笔宽度
         paint.setStrokeWidth(paintWidth);
@@ -270,7 +270,7 @@ public class AnimatorProgressView  extends View {
     private void getProgressBackground(Canvas canvas){
         //设置画笔
         Paint paint = new Paint();
-        paint.setColor(Color.parseColor(viewProgressColor));
+        paint.setColor(viewProgressColor);
 
         //确定两个圆形的中心位置及半径
         int leftCirclePoint = height / 2;

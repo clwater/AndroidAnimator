@@ -214,6 +214,14 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="background"
+                android:layout_marginBottom="4dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -224,7 +232,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="#CECECE"
+                android:text="#FFCECECE"
                 android:textSize="18sp"
                 android:gravity="center"
                 android:textStyle="bold"
@@ -237,12 +245,62 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"></LinearLayout>
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="progress color"
+                android:layout_marginBottom="4dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#000000"
+                android:id="@+id/vw_color_progress_background"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="#FF000000"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:id="@+id/tv_color_progress_background"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"></LinearLayout>
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="line color"
+                android:layout_marginBottom="4dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#FFFFFF"
+                android:id="@+id/vw_color_line"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="#FFFFFFFF"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:id="@+id/tv_color_base_line"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
 
     </LinearLayout>
 

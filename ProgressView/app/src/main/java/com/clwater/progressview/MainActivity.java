@@ -29,11 +29,16 @@ public class MainActivity extends AppCompatActivity {
     private MaterialTextView tv_line_animator;
     private MaterialTextView tv_line_animator_progress;
     private View vw_color_base_background;
-    private int backgroundColor;
-    private String progressBackgroundColor;
-    private String LineColor;
+    private View vw_color_progress_background;
+    private View vw_color_line;
     private MaterialTextView tv_color_base_background;
+    private MaterialTextView tv_color_progress_background;
+    private MaterialTextView tv_color_base_line;
 
+    private int backgroundColor = 0xFFCECECE;
+    private int viewLineColor = 0xFFFFFFFF;
+    private int viewProgressColor = 0xFF000000;
+    private int LineColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
         tv_line_animator_progress = findViewById(R.id.tv_line_animator_progress);
         vw_color_base_background = findViewById(R.id.vw_color_base_background);
         tv_color_base_background = findViewById(R.id.tv_color_base_background);
+        vw_color_progress_background = findViewById(R.id.vw_color_progress_background);
+        tv_color_progress_background = findViewById(R.id.tv_color_progress_background);
+        vw_color_line = findViewById(R.id.vw_color_line);
+        tv_color_base_line = findViewById(R.id.tv_color_base_line);
 
         findViewById(R.id.bt_progress_set).setOnClickListener(v -> {
             int progress = Integer.parseInt(etProgress.getText().toString());
@@ -156,14 +165,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        backgroundColor = 0xFFCECECE;
 
         vw_color_base_background.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new ColorPickerPopup.Builder(MainActivity.this)
-                        .initialColor(backgroundColor) // Set initial color
-                        .enableAlpha(true) // Enable alpha slider or not
+                        .initialColor(backgroundColor)
+                        .enableAlpha(true)
                         .okTitle("Choose")
                         .cancelTitle("Cancel")
                         .showIndicator(true)
@@ -181,6 +189,52 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        vw_color_progress_background.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ColorPickerPopup.Builder(MainActivity.this)
+                        .initialColor(viewProgressColor)
+                        .enableAlpha(true)
+                        .okTitle("Choose")
+                        .cancelTitle("Cancel")
+                        .showIndicator(true)
+                        .showValue(true)
+                        .build()
+                        .show(vw_color_progress_background , new ColorPickerPopup.ColorPickerObserver() {
+                            @Override
+                            public void onColorPicked(int color) {
+                                viewProgressColor = color;
+                                tv_color_progress_background.setText(String.format("#%06X", color));
+                                animatorProgressView.setViewProgressColor(color);
+                                vw_color_progress_background.setBackgroundColor(color);
+                            }
+                        });
+            }
+        });
+
+
+        vw_color_line.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ColorPickerPopup.Builder(MainActivity.this)
+                        .initialColor(viewLineColor)
+                        .enableAlpha(true)
+                        .okTitle("Choose")
+                        .cancelTitle("Cancel")
+                        .showIndicator(true)
+                        .showValue(true)
+                        .build()
+                        .show(vw_color_line , new ColorPickerPopup.ColorPickerObserver() {
+                            @Override
+                            public void onColorPicked(int color) {
+                                viewLineColor = color;
+                                tv_color_base_line.setText(String.format("#%06X", color));
+                                animatorProgressView.setViewLineColor(color);
+                                vw_color_line.setBackgroundColor(color);
+                            }
+                        });
+            }
+        });
 
     }
 
