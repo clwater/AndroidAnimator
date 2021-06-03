@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         ((AppCompatSeekBar)findViewById(R.id.sb_line_interval)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Log.d("gzb", "onProgressChanged: " + progress);
                 animatorProgressView.setOffsetLine(progress);
                 tvLineInterval.setText("" + progress);
             }
