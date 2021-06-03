@@ -53,7 +53,7 @@ public class AnimatorProgressView  extends View {
 
     //下面为可自定义编辑的参数
     //背景颜色
-    private String viewBackGroundColor = "#CECECE";
+    private int viewBackGroundColor = 0xFFCECECE;
     //线条颜色
     private String viewLineColor = "#FFFFFF";
     //进度条颜色
@@ -76,7 +76,7 @@ public class AnimatorProgressView  extends View {
 
 
 
-    public void setViewBackGroundColor(String viewBackGroundColor) {
+    public void setViewBackGroundColor(int viewBackGroundColor) {
         this.viewBackGroundColor = viewBackGroundColor;
         invalidate();
     }
@@ -327,7 +327,7 @@ public class AnimatorProgressView  extends View {
         canvas.save();
 
         Paint paint = new Paint();
-        paint.setColor(Color.parseColor(viewBackGroundColor));
+        paint.setColor(viewBackGroundColor);
 
         int leftCirclePoint = height / 2;
         int rightCirclePoint = width - leftCirclePoint;
