@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AnimationProgress">
+        <attr name="view_background_color" format="color"/>
+        <attr name="view_progress_color" format="color"/>
+        <attr name="view_line_color" format="color"/>
+        <attr name="offset_line" format="integer"/>
+        <attr name="line_width" format="integer"/>
+        <attr name="animator_time" format="integer"/>
+        <attr name="animator_progress_time" format="integer"/>
+
+    </declare-styleable>
+</resources>

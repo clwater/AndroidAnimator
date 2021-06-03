@@ -1,7 +1,9 @@
 package com.clwater.progressview;
 
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -24,24 +26,29 @@ import androidx.annotation.Nullable;
  */
 public class AnimatorProgressView  extends View {
     public AnimatorProgressView(Context context) {
-        super(context);
-        startAnimator();
+        this(context, null);
     }
 
     public AnimatorProgressView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        startAnimator();
+        this(context, attrs, 0);
     }
 
     public AnimatorProgressView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        @SuppressLint("CustomViewStyleable") TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AnimationProgress);
+        viewBackGroundColor = typedArray.getColor(R.styleable.AnimationProgress_view_background_color, 0xFFCECECE);
+        viewProgressColor = typedArray.getColor(R.styleable.AnimationProgress_view_progress_color, 0xFF000000);
+        viewLineColor = typedArray.getColor(R.styleable.AnimationProgress_view_line_color, 0xFFFFFFFF);
+
+        offsetLine = typedArray.getInt(R.styleable.AnimationProgress_offset_line, 20);
+        paintWidth = typedArray.getInt(R.styleable.AnimationProgress_line_width, 10);
+        animatorTime = typedArray.getInt(R.styleable.AnimationProgress_animator_time, 1000);
+        animatorProgressTime = typedArray.getInt(R.styleable.AnimationProgress_animator_progress_time, 10);
+
+        typedArray.recycle();
         startAnimator();
     }
 
-    public AnimatorProgressView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        startAnimator();
-    }
 
 
     //当前view 宽度和高度
@@ -53,29 +60,26 @@ public class AnimatorProgressView  extends View {
 
     //下面为可自定义编辑的参数
     //背景颜色
-    private int viewBackGroundColor = 0xFFCECECE;
+    private int viewBackGroundColor;
     //线条颜色
-    private int viewLineColor = 0xFFFFFFFF;
+    private int viewLineColor;
     //进度条颜色
-    private int viewProgressColor = 0xFF000000;
+    private int viewProgressColor;
     //线条见间隔
-    private int offsetLine = 20;
+    private int offsetLine;
     //执行动画需要的时间
-    private int animatorTime = 1000;
+    private int animatorTime;
     //进度变化动画需要的时间
-    private int animatorProgressTime = 1000;
-
-
-
+    private int animatorProgressTime;
     //画笔/线条的宽度
-    private int paintWidth = 10;
+    private int paintWidth;
 
 
     //当前进度
     private float progress = 0;
 
 
-
+    //设置对应的属性
     public void setViewBackGroundColor(int viewBackGroundColor) {
         this.viewBackGroundColor = viewBackGroundColor;
         invalidate();

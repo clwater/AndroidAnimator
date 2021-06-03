@@ -22,6 +22,7 @@ import top.defaults.colorpicker.ColorPickerPopup;
 
 public class MainActivity extends AppCompatActivity {
 
+
     private AnimatorProgressView animatorProgressView;
     private EditText etProgress;
     private MaterialTextView tvLineWidth;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private MaterialTextView tv_color_progress_background;
     private MaterialTextView tv_color_base_line;
 
+    //默认展示相关颜色
     private int backgroundColor = 0xFFCECECE;
     private int viewLineColor = 0xFFFFFFFF;
     private int viewProgressColor = 0xFF000000;
@@ -43,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         initView();
     }
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         vw_color_line = findViewById(R.id.vw_color_line);
         tv_color_base_line = findViewById(R.id.tv_color_base_line);
 
+        //设置进度(自定义)
         findViewById(R.id.bt_progress_set).setOnClickListener(v -> {
             int progress = Integer.parseInt(etProgress.getText().toString());
             if (progress > 100) {
@@ -73,15 +75,20 @@ public class MainActivity extends AppCompatActivity {
             animatorProgressView.setProgress(progress);
         });
 
+        //设置进度(0)
         findViewById(R.id.bt_progress_0).setOnClickListener(v -> {
             etProgress.setText("" + 0);
 
             animatorProgressView.setProgress(0);
         });
+
+        //设置进度(100)
         findViewById(R.id.bt_progress_100).setOnClickListener(v -> {
             etProgress.setText("" + 100);
             animatorProgressView.setProgress(100);
         });
+
+        //设置进度(随机)
         findViewById(R.id.bt_progress_random).setOnClickListener(v -> {
             int progress = new Random().nextInt(100);
             etProgress.setText("" + progress);
@@ -89,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             animatorProgressView.setProgress(progress);
         });
 
-
+        //设置动画中线的宽度
         ((AppCompatSeekBar)findViewById(R.id.sb_line_width)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -108,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        //设置动画中线之间的间隔
         ((AppCompatSeekBar)findViewById(R.id.sb_line_interval)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -127,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        //设置动画速度
         ((AppCompatSeekBar)findViewById(R.id.sb_line_animator)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -146,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //设置progress进度的速度
         ((AppCompatSeekBar)findViewById(R.id.sb_line_animator_progress)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -164,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        //设置背景颜色
         vw_color_base_background.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -188,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //设置显示进度的背景颜色
         vw_color_progress_background.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -212,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        //设置线的颜色
         vw_color_line.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -235,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //随机生成一种颜色的组合
         findViewById(R.id.bt_color_random).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

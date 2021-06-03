@@ -21,6 +21,13 @@
         android:layout_height="16dp"
         android:layout_marginTop="32dp"
         android:id="@+id/ap_main"
+        app:view_background_color="#CECECE"
+        app:view_progress_color="#000000"
+        app:view_line_color="#ffffff"
+        app:offset_line="20"
+        app:line_width="10"
+        app:animator_time="1000"
+        app:animator_progress_time="100"
         />
 
     <LinearLayout
