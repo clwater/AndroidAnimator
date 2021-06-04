@@ -250,6 +250,8 @@ public class AnimatorProgressView  extends View {
         paint.setStrokeCap(Paint.Cap.ROUND);
         //todo 动画效果展示优化
         canvas.translate(-offsetLine * 2, 0);
+        //offsetAnimator 为动画展示时使用, 每次移动一定的长度,
+        //通过连续的移动来实现视觉上的动画效果
         canvas.translate(offsetAnimator, 0);
         canvas.save();
 
