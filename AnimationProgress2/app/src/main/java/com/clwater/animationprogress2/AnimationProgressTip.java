@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
@@ -30,11 +31,22 @@ public class AnimationProgressTip extends View {
     private int width = 0;
     private int height = 0;
 
+    //提示框的宽度
     private int tipWidth = 200;
+    //提示框的高度
     private int tipHeight = 100;
-    private int progress = 50;
+    //提示框底部三甲区域的边长
     private int triangleWith = 30;
-    private float changeProgress = 40;
+    //滑动过程中变化的角度
+    private int maxDegrees = -20;
+
+    private int backgroundColor = 0xff000000;
+    private int textColor = 0xffffffff;
+
+    //当前展示的进度
+    private int progress = 0;
+    //当前需要变化的进度(用于角度变化)
+    private float changeProgress = 0;
 
     @Override
     /**
@@ -48,6 +60,9 @@ public class AnimationProgressTip extends View {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
+    /**
+     * @description 更新当前的进度
+     */
     public void setProgress(int progress) {
         if (progress != this.progress) {
             invalidate();
@@ -55,15 +70,19 @@ public class AnimationProgressTip extends View {
         }
     }
 
-    public void startProgressAnimator(int startProgress, int endProgress){
+    /**
+     * @description 设置进度动画
+     */
+    public void startProgressAnimator(int startProgress, int endProgress) {
         //动画差值范围
-        ValueAnimator va  = ValueAnimator.ofFloat(startProgress, endProgress);
+        ValueAnimator va = ValueAnimator.ofFloat(startProgress, endProgress);
         va.setDuration(1000);
-        //线性取值
-        va.setInterpolator(new AnticipateOvershootInterpolator());
+        //差值器取值
+        va.setInterpolator(new AccelerateDecelerateInterpolator());
         va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                //更新当前进度和变化进度的取值
                 float currentProgress = (float) valueAnimator.getAnimatedValue();
                 progress = (int) currentProgress;
                 changeProgress = endProgress - currentProgress;
@@ -79,30 +98,34 @@ public class AnimationProgressTip extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        //绘制区域下移, 避免顶部动画时内容缺失
         canvas.translate(0, tipHeight / 3);
-//        canvas.translate(tipWidth, 0);
+        //更新绘制坐标位置
         int tipPosition = (int) ((width - tipWidth) / 100f * progress);
 
-        if (tipPosition < 0 ){
-            tipPosition = 0;
-        }else if (tipPosition > width - tipWidth){
-            tipPosition = width - tipWidth;
+        //避免差值器过度至异常位置
+        if (tipPosition < tipWidth / 6) {
+            tipPosition = tipWidth / 6;
+        } else if (tipPosition > width - tipWidth / 6f * 7) {
+            tipPosition = (int) (width - tipWidth / 6f * 7);
         }
 
-//        canvas.rotate(0, tipWidth >> 1, tipHeight + triangleWith);
-
-//        canvas.translate(tipWidth >> 1, 0);
+        //背景绘制Paint
         Paint paint = new Paint();
-        paint.setColor(Color.parseColor("#000000"));
+        paint.setColor(backgroundColor);
 
+        //移动到中心的位置
         canvas.translate(tipPosition, 0);
 
-        int degrees = (int) (changeProgress / 100f * - 20);
+        //更新需要变化的角度
+        int degrees = (int) (changeProgress / 100f * maxDegrees);
 
+        //旋转整体
         canvas.rotate(degrees, tipWidth >> 1,
                 tipHeight + triangleWith);
         canvas.save();
 
+        //绘制圆角矩形区域
         canvas.drawRoundRect(0,
                 0,
                 tipWidth,
@@ -110,36 +133,40 @@ public class AnimationProgressTip extends View {
                 30, 30, paint);
         canvas.translate(tipWidth >> 1, tipHeight);
 
-        //实例化路径
+        //绘制底部三角区域
         Path path = new Path();
-        path.moveTo(-triangleWith >>  1, 0);// 此点为多边形的起点
-        path.lineTo(triangleWith >>  1, 0);
+        path.moveTo(-triangleWith >> 1, 0);
+        path.lineTo(triangleWith >> 1, 0);
         path.lineTo(0, triangleWith);
-        path.close(); // 使这些点构成封闭的多边形
+        path.close();
         canvas.drawPath(path, paint);
 
         canvas.restore();
         canvas.save();
 
+        //文件绘制Paint
         Paint textPaint = new Paint();
-        textPaint.setColor(Color.WHITE);
+        textPaint.setColor(textColor);
         textPaint.setTextSize(tipHeight >> 1);
         textPaint.setStyle(Paint.Style.FILL);
-        //该方法即为设置基线上那个点究竟是left,center,还是right  这里我设置为center
+
+        //使得在文字x轴居中
         textPaint.setTextAlign(Paint.Align.CENTER);
 
+        //使得在文字y轴居中
         Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
-        float top = fontMetrics.top;//为基线到字体上边框的距离,即上图中的top
-        float bottom = fontMetrics.bottom;//为基线到字体下边框的距离,即上图中的bottom
+        float top = fontMetrics.top;
+        float bottom = fontMetrics.bottom;
+        int baseLineY = (int) ((tipHeight >> 1) - top / 2 - bottom / 2);
 
-        int baseLineY = (int) ((tipHeight >> 1) - top/2 - bottom/2);//基线中间点的y轴计算公式
-
-        if(progress < 0){
+        //避免差值器引起的取值异常
+        if (progress < 0) {
             progress = 0;
-        }else if (progress > 100){
+        } else if (progress > 100) {
             progress = 100;
         }
-        String text = "" +  progress + "%";
+        //更新需要展示的文字信息
+        String text = "" + progress + "%";
         canvas.drawText(text, tipWidth >> 1, baseLineY, textPaint);
     }
 }

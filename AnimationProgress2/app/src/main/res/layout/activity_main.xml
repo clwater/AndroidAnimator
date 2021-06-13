@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:layout_marginTop="20dp">
 
 <com.clwater.animationprogress2.AnimationProgressTip
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:layout_marginTop="200dp"
+    android:layout_height="80dp"
     android:id="@+id/ap_main"
     />
 
