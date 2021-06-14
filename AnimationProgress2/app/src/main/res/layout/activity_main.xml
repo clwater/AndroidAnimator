@@ -16,16 +16,74 @@
     android:id="@+id/ap_main"
     />
 
-    <com.google.android.material.button.MaterialButton
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bt_test"
-        android:text="test"/>
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_progress"
+            android:text="0"
+            android:inputType="number"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="set"
+            app:backgroundTint="@color/black"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:id="@+id/bt_progress_set"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="set progress 0"
+            app:backgroundTint="@color/black"
+            android:layout_marginStart="8dp"
+            android:textSize="12sp"
+            android:layout_marginEnd="8dp"
+            android:id="@+id/bt_progress_0"
+            />
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="set progress 100"
+            android:textSize="12sp"
+            app:backgroundTint="@color/black"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:id="@+id/bt_progress_100"
+            />
+
+    </LinearLayout>
 
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bt_test_2"
-        android:text="test_2"/>
+        android:text="set progress random"
+        app:backgroundTint="@color/black"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:id="@+id/bt_progress_random"
+        />
+
 </LinearLayout>
